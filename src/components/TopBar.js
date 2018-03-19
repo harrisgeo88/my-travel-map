@@ -1,17 +1,17 @@
 import React from 'react'
-import countries from './countries'
+import allCountries from './data/allCountries'
 import Dropdown from './DropdownBox'
-import * as _ from 'lodash'
+import {observer} from 'mobx-react'
 
 class TopBar extends React.Component {
+
+    state = {
+        country: ''
+    }
 
     static defaultProps = {
         onChange: null,
         add: null
-    }
-
-    state = {
-        country: 'BRA'
     }
 
     onChange = (value) => {
@@ -21,14 +21,20 @@ class TopBar extends React.Component {
         this.setState({country: value})
     }
 
+    add = () => {
+        this.props.store.data.addCountry(this.state.country)
+    }
+
     render() {
         return <div>
-            <Dropdown value={this.state.country} name="country" options={countries} onChange={this.onChange} />
-            <button onClick={this.props.add}>Add</button>
-            <br/>
-            Total <b>{_.size(this.props.countries)}</b>
+            <Dropdown name="country"
+                      defaultValue="Select a country"
+                      value={this.state.country}
+                      options={allCountries}
+                      onChange={this.onChange} />
+            <button onClick={this.add}>Add</button>
         </div>
     }
 }
 
-export default TopBar
+export default observer(TopBar)

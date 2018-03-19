@@ -1,8 +1,7 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
 import Datamap from 'datamaps/dist/datamaps.world.min'
-import * as d3 from 'd3'
-import * as _ from "lodash";
+import * as _ from "lodash"
+import {observer} from "mobx-react"
 
 class Map extends React.Component {
 
@@ -14,46 +13,47 @@ class Map extends React.Component {
   countriesFormat(data) {
     let obj = {}
     _.map(data, (d) => {
-      obj[d] = {fillKey: 'liked'} 
+      obj[d] = {fillKey: 'been'}
     })
 
     return obj
   }
 
+  componentWillReact() {
+    this.datamap.updateChoropleth(this.countriesFormat(this.props.store.data.countries), {reset: true})
+  }
 
   componentWillReceiveProps(props) {
-    this.datamap.updateChoropleth(this.countriesFormat(props.data))
+    this.datamap.updateChoropleth(this.countriesFormat(props.store.data.countries), {reset: true})
   }
 
   renderMap = () => {
-    let {data} = this.props
-    console.log('renderMap',data.countries)
+    let {data} = this.props.store
     return new Datamap({
-      element: ReactDOM.findDOMNode(this),
+      element: document.getElementById('datamap-container'),
       projection: 'mercator',
-      fills: {defaultFill: '#666', liked:'#0984DB'}, // data categories
-      data: this.countriesFormat(data), // countries
-      geographyConfig: {highlightFillColor: '#FF0000'},//mapData.geographyConfig(), // hover colour
+      fills: {defaultFill: '#666', been:'#0984DB'}, // data categories
+      data: this.countriesFormat(data.countries), // countries
+      geographyConfig: {
+        highlightFillColor: '#FF0000',
+      },
       done: (datamap) => {
-        datamap.svg.selectAll('.datamaps-subunit').on('click', function(geo) {
-          data.setValue(geo.id)
-         })
+        // do something
       }
     })
   }
   
-  componentDidMount(){
-    const mapContainer = d3.select('#datamap-container')
-    mapContainer.style({width: '100%', height:'2000px'})
+  componentDidMount() {
     this.datamap = this.renderMap()
   }
 
   render() {
-    return (
-      <div id="datamap-container">
+      return <div>
+        Total <b>{this.props.store.data.beenTo}</b>
+        <div id="datamap-container">
+          </div>
       </div>
-    )
   }
 }
 
-export default Map
+export default observer(Map)
