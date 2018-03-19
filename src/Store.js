@@ -8,12 +8,14 @@ class CountriesStore {
         addCountry: action((value) => {
             let canAdd = true
             this.data.countries.forEach((country) => {
-                if (country === value)
+                if (country === value || value === '') {
                     canAdd = false
+                }
             })
 
-            if (canAdd)
+            if (canAdd) {
                 this.data.countries.push(value)
+            }
         }),
         get beenTo() {
             return this.countries.length

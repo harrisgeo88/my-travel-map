@@ -15,9 +15,6 @@ class TopBar extends React.Component {
     }
 
     onChange = (value) => {
-        let {onChange} = this.props
-        if (onChange)
-            onChange(value)
         this.setState({country: value})
     }
 
