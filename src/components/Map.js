@@ -20,20 +20,20 @@ class Map extends React.Component {
   }
 
   componentWillReact() {
-    this.datamap.updateChoropleth(this.countriesFormat(this.props.store.data.countries), {reset: true})
+    this.datamap.updateChoropleth(this.countriesFormat(this.props.store.countries), {reset: true})
   }
 
   componentWillReceiveProps(props) {
-    this.datamap.updateChoropleth(this.countriesFormat(props.store.data.countries), {reset: true})
+    this.datamap.updateChoropleth(this.countriesFormat(props.store.countries), {reset: true})
   }
 
   renderMap = () => {
-    let {data} = this.props.store
+    let {countries} = this.props.store
     return new Datamap({
       element: document.getElementById('datamap-container'),
       projection: 'mercator',
       fills: {defaultFill: '#666', been:'#0984DB'}, // data categories
-      data: this.countriesFormat(data.countries), // countries
+      data: this.countriesFormat(countries), // countries
       geographyConfig: {
         highlightFillColor: '#FF0000',
       },
@@ -49,7 +49,7 @@ class Map extends React.Component {
 
   render() {
       return <div>
-        Total <b>{this.props.store.data.beenTo}</b>
+        Total <b>{this.props.store.beenTo}</b>
         <div id="datamap-container">
           </div>
       </div>

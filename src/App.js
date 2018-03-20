@@ -9,10 +9,10 @@ class App extends Component {
 
   render() {
     return <div className="App">
-        <TopBar countries={store.data.countries}
+        <TopBar countries={store.countries}
                 store={store}
                 onChange={this.onChange} />
-        <Map store={store} countries={store.data.countries} />
+        <Map store={store} />
       </div>
   }
 }

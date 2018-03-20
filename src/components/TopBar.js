@@ -19,7 +19,7 @@ class TopBar extends React.Component {
     }
 
     add = () => {
-        this.props.store.data.addCountry(this.state.country)
+        this.props.store.addCountry(this.state.country)
     }
 
     render() {
