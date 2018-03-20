@@ -6,6 +6,13 @@
 # testing
 /coverage
 
+# deploy
+/docs
+/build
+
+# random
+/.idea
+
 # misc
 .DS_Store
 .env.local
